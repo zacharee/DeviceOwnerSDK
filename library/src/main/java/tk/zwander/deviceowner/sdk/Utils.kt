@@ -11,6 +11,24 @@ import java.lang.reflect.Method
 
 val serviceComponent = ComponentName("tk.zwander.deviceowner", "tk.zwander.deviceowner.api.ActionRequestService")
 
+val Context.adminBinder: IBinder?
+    get() {
+        return peekService(Intent().setComponent(serviceComponent))
+    }
+
+val IBinder.adminService: IActionService
+    get() {
+        return IActionService.Stub.asInterface(this)
+    }
+
+val Context.adminService: IActionService?
+    get() {
+        return adminBinder?.adminService
+    }
+
+val Context.actionManager: ActionManager
+    get() = ActionManager.getInstance(this)
+
 fun Context.peekService(service: Intent): IBinder? {
     val am = ActivityManager.getService()
     var binder: IBinder? = null
@@ -25,18 +43,6 @@ fun Context.peekService(service: Intent): IBinder? {
     }
 
     return binder
-}
-
-fun Context.getAdminBinder(): IBinder? {
-    return peekService(Intent().setComponent(serviceComponent))
-}
-
-fun IBinder.getAdminService(): IActionService {
-    return IActionService.Stub.asInterface(this)
-}
-
-fun Context.getAdminService(): IActionService? {
-    return getAdminBinder()?.getAdminService()
 }
 
 fun allowHiddenAPIs() {
