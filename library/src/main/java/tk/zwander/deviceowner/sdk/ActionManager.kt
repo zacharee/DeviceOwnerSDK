@@ -65,6 +65,33 @@ class ActionManager private constructor(private val context: Context) {
     }
 
     /**
+     * Set the specified package names to the specified
+     * suspension state.
+     *
+     * @param packageNames the package names to affect
+     * @param suspended whether to suspend or un-suspend
+     *
+     * @return which packages weren't successfully changed
+     * @return null if the call was unsuccessful
+     */
+    @RequiresApi(Build.VERSION_CODES.N)
+    fun setPackagesSuspended(packageNames: Array<String>, suspended: Boolean): Array<String>? {
+        return service?.setPackagesSuspended(packageNames, suspended)
+    }
+
+    /**
+     * Query whether a specific package is suspended.
+     *
+     * @param packageName the app in question
+     *
+     * @return whether the application is suspended
+     */
+    @RequiresApi(Build.VERSION_CODES.N)
+    fun isPackageSuspended(packageName: String): Boolean {
+        return service?.isPackageSuspended(packageName) ?: false
+    }
+
+    /**
      * Clear the specified app's user data.
      *
      * @param packageName the package name of the app whose data to clear
