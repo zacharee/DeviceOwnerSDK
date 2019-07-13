@@ -1,11 +1,15 @@
 package tk.zwander.deviceowner.sdk;
 
 import tk.zwander.deviceowner.sdk.IAdminRequestCallback;
+import tk.zwander.deviceowner.sdk.IOnClearApplicationDataListener;
 
 interface IActionService {
-    boolean setApplicationHidden(String packageName, boolean hidden);
-    boolean isApplicationHidden(String packageName);
+    boolean isAllowed() = 1;
+    void requestPermission(in IAdminRequestCallback callback) = 2;
 
-    boolean isAllowed();
-    void requestPermission(in IAdminRequestCallback callback);
+    boolean setApplicationHidden(String packageName, boolean hidden) = 3;
+    boolean isApplicationHidden(String packageName) = 4;
+
+    //Can only be called on API >= 28
+    void clearApplicationUserData(String packageName, in IOnClearApplicationDataListener listener) = 5;
 }
