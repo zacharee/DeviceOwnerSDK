@@ -1,3 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="tk.zwander.deviceowner.sdk">
+
+    <uses-permission android:name="tk.zwander.deviceowner.ADMIN" />
+
 </manifest>
