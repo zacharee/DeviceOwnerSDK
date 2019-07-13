@@ -1,7 +1,6 @@
 package tk.zwander.deviceowner.sdk
 
 import android.app.ActivityManager
-import android.content.BroadcastReceiver
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
@@ -34,6 +33,10 @@ fun Context.getAdminBinder(): IBinder? {
 
 fun IBinder.getAdminService(): IActionService {
     return IActionService.Stub.asInterface(this)
+}
+
+fun Context.getAdminService(): IActionService? {
+    return getAdminBinder()?.getAdminService()
 }
 
 fun allowHiddenAPIs() {
